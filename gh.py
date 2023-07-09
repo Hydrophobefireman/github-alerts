@@ -65,7 +65,7 @@ class GHManager:
         """
         response = requests.get(self.commit_url, timeout=self.timeout)
         commits = response.json()
-        latest_commit = commits[0]
+        latest_commit = commits[0] if commits else None
 
         # Check if there's a new commit
         if latest_commit["sha"] != self.last_commit_sha:
@@ -80,7 +80,7 @@ class GHManager:
         """
         response = requests.get(self.pr_url, timeout=self.timeout)
         pull_requests = response.json()
-        latest_pull_request = pull_requests[0]
+        latest_pull_request = pull_requests[0] if pull_requests else None
 
         # Check if there's a new pull request
         if latest_pull_request["id"] != self.last_pull_request_id:
