@@ -50,7 +50,7 @@ def run():
             payload = {
                 "embeds": [
                     {
-                        "title": "New Commit",
+                        "title": "Commit",
                         "description": commit["commit"]["message"],
                         "url": commit["html_url"],
                         "color": 0xFF0000,  # Red color
@@ -73,7 +73,7 @@ def run():
             payload = {
                 "embeds": [
                     {
-                        "title": "New PR",
+                        "title": "PR",
                         "description": pull_req["title"],
                         "url": pull_req["html_url"],
                         "color": 0xFF0000,
