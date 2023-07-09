@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  github-monitor:
+    build:
+      context: .
+    env_file:
+      - .env
