@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   github-monitor:
+    restart: unless-stopped
     build:
       context: .
     env_file:
