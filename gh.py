@@ -68,7 +68,7 @@ class GHManager:
         latest_commit = commits[0] if commits else None
 
         # Check if there's a new commit
-        if latest_commit["sha"] != self.last_commit_sha:
+        if latest_commit and latest_commit["sha"] != self.last_commit_sha:
             self.last_commit_sha = latest_commit["sha"]
             self.save_cache()
             return latest_commit
@@ -83,7 +83,10 @@ class GHManager:
         latest_pull_request = pull_requests[0] if pull_requests else None
 
         # Check if there's a new pull request
-        if latest_pull_request["id"] != self.last_pull_request_id:
+        if (
+            latest_pull_request
+            and latest_pull_request["id"] != self.last_pull_request_id
+        ):
             self.last_pull_request_id = latest_pull_request["id"]
             self.save_cache()
             return latest_pull_request
