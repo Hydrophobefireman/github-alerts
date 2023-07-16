@@ -9,6 +9,8 @@ import dotenv
 import requests
 
 from gh import GHManager
+from datetime import datetime
+
 
 dotenv.load_dotenv()
 
@@ -23,6 +25,14 @@ WEBHOOK_URL_FILE = "urls.json"
 manager = GHManager(REPO_OWNER, REPO_NAME)
 
 
+def log(*args, **kw):
+    """
+    Add timestamp to log
+    """
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{current_time}]", *args, **kw)
+
+
 def post_webhook(payload: dict):
     """
     Takes a payload dictionary and posts it to the webhook urls in urls.json list
@@ -30,7 +40,7 @@ def post_webhook(payload: dict):
     with open(WEBHOOK_URL_FILE, "r", encoding="utf-8") as file:
         urls = json.load(file)
         for url in urls:
-            print("[webhook] Posting update")
+            log("[webhook] Posting update")
             requests.post(url, json=payload, timeout=120)
 
 
@@ -39,12 +49,12 @@ def run():
     Driver
     """
     while True:
-        print("[manager] Checking for a new commit")
+        log("[manager] Checking for a new commit")
         commit = manager.check_new_commit()
         if commit is None:
-            print("[manager] did not find any new commits")
+            log("[manager] did not find any new commits")
         else:
-            print(
+            log(
                 f"[manager] found commit: {commit['sha']} - {commit['commit']['message']}"
             )
             payload = {
@@ -67,9 +77,9 @@ def run():
 
         pull_req = manager.check_new_pulls()
         if pull_req is None:
-            print("[manager] did not find any new PRs")
+            log("[manager] did not find any new PRs")
         else:
-            print(f"[manager] found PR: {pull_req['id']} - {pull_req['title']}")
+            log(f"[manager] found PR: {pull_req['id']} - {pull_req['title']}")
             payload = {
                 "embeds": [
                     {
