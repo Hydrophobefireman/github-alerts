@@ -1,16 +1,15 @@
 """
 A python script to scrape github and post a discord webhook
 """
+import json
 import os
 import time
-import json
+from datetime import datetime
 
 import dotenv
 import requests
 
 from gh import GHManager
-from datetime import datetime
-
 
 dotenv.load_dotenv()
 
